@@ -27,7 +27,7 @@ CreateThread(function()
     })
 end)
 
-function JobsAvailableToPlayersToday()
+local function JobsAvailableToPlayersToday()
     local options = {}
 
     for _, job in pairs(Config.Jobs) do
