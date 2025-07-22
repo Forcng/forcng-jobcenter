@@ -2,6 +2,28 @@ local pedModel = 's_m_m_highsec_01'
 local PedCoords = Config.PedCoords
 local PedHeading = Config.PedHeading
 
+local function JobsAvailableToPlayersToday()
+    local options = {}
+
+    for _, job in pairs(Config.Jobs) do
+        table.insert(options, {
+            title = ('%s'):format(job.label),
+            icon = "fa-solid fa-user-doctor",
+            onSelect = function()
+                TriggerServerEvent('forcng_jobcenter:server:setJob', job.job)
+            end
+        })
+    end
+
+    lib.registerContext({
+        id = 'jobs',
+        title = 'Whitelisted Job Center',
+        options = options
+    })
+
+    lib.showContext('jobs')
+end
+
 CreateThread(function()
     RequestModel(pedModel)
     while not HasModelLoaded(pedModel) do
@@ -26,28 +48,6 @@ CreateThread(function()
         }
     })
 end)
-
-local function JobsAvailableToPlayersToday()
-    local options = {}
-
-    for _, job in pairs(Config.Jobs) do
-        table.insert(options, {
-            title = ('%s'):format(job.label),
-            icon = "fa-solid fa-user-doctor",
-            onSelect = function()
-                TriggerServerEvent('forcng_jobcenter:server:setJob', job.job)
-            end
-        })
-    end
-
-    lib.registerContext({
-        id = 'jobs',
-        title = 'Whitelisted Job Center',
-        options = options
-    })
-
-    lib.showContext('jobs')
-end
 
 RegisterNetEvent('forcng_jobcenter:client:notify', function(type, message)
     lib.notify({
