@@ -36,7 +36,6 @@ CreateThread(function()
     FreezeEntityPosition(ped, true)
     SetBlockingOfNonTemporaryEvents(ped, true)
 
-
     exports.ox_target:addLocalEntity(ped, {
         {
             name = 'jobs',
@@ -47,6 +46,17 @@ CreateThread(function()
             end
         }
     })
+
+    local blip = AddBlipForCoord(PedCoords.x, PedCoords.y, PedCoords.z)
+    SetBlipSprite(blip, 408)
+    SetBlipDisplay(blip, 4)
+    SetBlipScale(blip, 0.6)
+    SetBlipColour(blip, 2)
+    SetBlipAsShortRange(blip, true)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Job Center")
+    EndTextCommandSetBlipName(blip)
 end)
 
 RegisterNetEvent('forcng_jobcenter:client:notify', function(type, message)
